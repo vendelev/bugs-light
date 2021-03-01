@@ -42,13 +42,14 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Auth', [
+//            'authorize'=> 'Controller',
             'authenticate' => [
                 'Form' => [
                     'fields' => [
                         'username' => 'email',
                         'password' => 'pass'
                     ],
-//                    'finder' => 'auth'
+                    'finder' => 'auth'
                 ]
             ],
             'loginAction' => Router::url(['controller' => 'users', 'action' => 'login']),
@@ -62,6 +63,7 @@ class AppController extends Controller
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
+        $this->set('isAuth', (bool)$this->Auth->user());
 
         /*
          * Enable the following component for recommended CakePHP security settings.
@@ -69,4 +71,9 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
     }
+
+//    public function isAuthorized($user): bool
+//    {
+//        return true;
+//    }
 }

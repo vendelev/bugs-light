@@ -6,7 +6,7 @@ services:
         hostname: ${COMPOSE_PROJECT_NAME}-php
         restart: always
         environment:
-            - XDEBUG_CONFIG="remote_host=${XDEBUG_REMOTE_HOST} remote_port=${XDEBUG_REMOTE_PORT}"
+            XDEBUG_CONFIG: "remote_host=${XDEBUG_REMOTE_HOST} remote_port=${XDEBUG_REMOTE_PORT} remote_enable=1"
         links:
             - nginx-bugs:${NGINX_HOSTNAME}
         volumes:
