@@ -15,7 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
+use Cake\Routing\Router;
 
 /**
  * Application Controller
@@ -40,6 +40,23 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'pass'
+                    ],
+//                    'finder' => 'auth'
+                ]
+            ],
+            'loginAction' => Router::url(['controller' => 'users', 'action' => 'login']),
+            // If unauthorized, return them to page they were just on
+//            'unauthorizedRedirect' => Router::url(['controller' => 'users', 'action' => 'login'])
+        ]);
+
+        $this->Auth->allow([]);
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
