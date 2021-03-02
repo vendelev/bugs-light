@@ -49,7 +49,7 @@ class AppController extends Controller
                         'username' => 'email',
                         'password' => 'pass'
                     ],
-                    'finder' => 'auth'
+//                    'finder' => 'auth'
                 ]
             ],
             'loginAction' => Router::url(['controller' => 'users', 'action' => 'login']),
