@@ -2,7 +2,7 @@
 
 use Migrations\AbstractSeed;
 
-class UsersSeeder extends AbstractSeed
+class O1UsersSeeder extends AbstractSeed
 {
     public function run(): void
     {
@@ -15,6 +15,7 @@ class UsersSeeder extends AbstractSeed
                 'name'    => $faker->name,
                 'created' => date('Y-m-d H:i:s'),
                 'modified' => date('Y-m-d H:i:s'),
+                'deleted' => $faker->randomElement([date('Y-m-d H:i:s'), null]),
             ];
         }
 

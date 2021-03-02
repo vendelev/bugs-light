@@ -1,7 +1,7 @@
 INSTALL=clean ok vendor perms
 
 .ONESHELL:
-.PHONY: ok clean install dump-env vendor
+.PHONY: ok clean install vendor
 
 ok: docker-compose-ok services-is-up
 
