@@ -36,18 +36,16 @@ class User extends Entity
     ];
 
     /**
-     * @param $value
+     * @param $password
      *
      * @return false|string
      */
-    protected function _setPassword($value)
+    protected function _setPass($password)
     {
-        if (strlen($value)) {
-            $hasher = new DefaultPasswordHasher();
-
-            return $hasher->hash($value);
+        if ($password) {
+            return (new DefaultPasswordHasher)->hash($password);
         }
 
-        return '';
+        return false;
     }
 }
