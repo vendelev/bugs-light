@@ -2,11 +2,11 @@
 
 use Migrations\AbstractSeed;
 
-class UsersSeeder extends AbstractSeed
+class O1UsersSeeder extends AbstractSeed
 {
     public function run(): void
     {
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('ru_RU');
         $data = [];
         for ($i = 0; $i < 10; $i++) {
             $data[] = [
@@ -15,6 +15,7 @@ class UsersSeeder extends AbstractSeed
                 'name'    => $faker->name,
                 'created' => date('Y-m-d H:i:s'),
                 'modified' => date('Y-m-d H:i:s'),
+                'deleted' => $faker->randomElement([date('Y-m-d H:i:s'), null]),
             ];
         }
 

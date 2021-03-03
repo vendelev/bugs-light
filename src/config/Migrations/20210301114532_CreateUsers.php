@@ -5,7 +5,7 @@ class CreateUsers extends AbstractMigration
 {
     public function change(): void
     {
-        $this->table('users')
+        $this->table('users', ['collation' => 'utf8_general_ci'])
             ->addColumn('email', 'string', [
                 'limit' => 255,
                 'null' => false,

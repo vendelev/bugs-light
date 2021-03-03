@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use SoftDelete\Model\Table\SoftDeleteTrait;
 
 /**
  * Users Model
@@ -21,6 +22,8 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+    use SoftDeleteTrait;
+
     /**
      * Initialize method
      *
@@ -89,12 +92,12 @@ class UsersTable extends Table
         return $rules;
     }
 
-    public function findAuth(\Cake\ORM\Query $query, array $options)
-    {
-        $query
-//            ->select(['id', 'email', 'pass'])
-            ->where(['Users.deleted is null']);
-
-        return $query;
-    }
+//    public function findAuth(\Cake\ORM\Query $query, array $options)
+//    {
+//        $query
+////            ->select(['id', 'email', 'pass'])
+//            ->where(['Users.deleted is null']);
+//
+//        return $query;
+//    }
 }

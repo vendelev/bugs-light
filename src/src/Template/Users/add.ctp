@@ -3,24 +3,19 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+
+print $this->element('menu');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
+<div class="users form large-10 medium-8 columns content">
+    <?php print $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Add User') ?></legend>
+        <legend><?php print __('Add User') ?></legend>
         <?php
             echo $this->Form->control('email');
             echo $this->Form->control('pass');
             echo $this->Form->control('name');
-            echo $this->Form->control('deleted', ['empty' => true]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+    <?php print $this->Form->button(__('Submit')) ?>
+    <?php print $this->Form->end() ?>
 </div>

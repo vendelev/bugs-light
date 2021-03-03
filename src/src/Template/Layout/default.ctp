@@ -15,45 +15,48 @@
  */
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
+$this->assign('title', __('Баг треккер лайт'));
+
+/** @var \App\Model\Entity\User $currentUser */
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Html->charset() ?>
+    <?php print $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?php print $cakeDescription ?>:
+        <?php print $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
+    <?php print $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
+    <?php print $this->Html->css('base.css') ?>
+    <?php print $this->Html->css('style.css') ?>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?php print $this->fetch('meta') ?>
+    <?php print $this->fetch('css') ?>
+    <?php print $this->fetch('script') ?>
 </head>
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
+        <ul class="title-area large-2 medium-4 columns">
             <li class="name">
-                <h1><a href="/"><?= $this->fetch('title') ?></a></h1>
+                <h1><a href="/"><?php print $this->fetch('title') ?></a></h1>
             </li>
         </ul>
         <div class="top-bar-section">
             <ul class="right">
                 <?php
-                if ($isAuth) { ?>
+                if ($currentUser) { ?>
                 <li><a href="<?php print $this->Url->build(['controller' => 'users', 'action' => 'logout']); ?>"
                     ><?php print __('Выход'); ?></a></li>
                 <?php } ?>
             </ul>
         </div>
     </nav>
-    <?= $this->Flash->render() ?>
+    <?php print $this->Flash->render() ?>
     <div class="container clearfix">
-        <?= $this->fetch('content') ?>
+        <?php print $this->fetch('content') ?>
     </div>
     <footer>
     </footer>

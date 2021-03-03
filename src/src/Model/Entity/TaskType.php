@@ -1,21 +1,18 @@
 <?php
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
- * User Entity
+ * TaskType Entity
  *
  * @property int $id
- * @property string $email
- * @property string $pass
- * @property string $name
+ * @property string $title
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property \Cake\I18n\FrozenTime|null $deleted
  */
-class User extends Entity
+class TaskType extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -27,25 +24,9 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'email' => true,
-        'pass' => true,
-        'name' => true,
+        'title' => true,
         'created' => true,
         'modified' => true,
         'deleted' => true,
     ];
-
-    /**
-     * @param $password
-     *
-     * @return false|string
-     */
-    protected function _setPass($password)
-    {
-        if ($password) {
-            return (new DefaultPasswordHasher)->hash($password);
-        }
-
-        return false;
-    }
 }

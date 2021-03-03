@@ -15,7 +15,7 @@ if (Configure::read('debug')) :
 <?php if (!empty($error->queryString)) : ?>
     <p class="notice">
         <strong>SQL Query: </strong>
-        <?= h($error->queryString) ?>
+        <?php print h($error->queryString) ?>
     </p>
 <?php endif; ?>
 <?php if (!empty($error->params)) : ?>
@@ -24,7 +24,7 @@ if (Configure::read('debug')) :
 <?php endif; ?>
 <?php if ($error instanceof Error) : ?>
         <strong>Error in: </strong>
-        <?= sprintf('%s, line %s', str_replace(ROOT, 'ROOT', $error->getFile()), $error->getLine()) ?>
+        <?php print sprintf('%s, line %s', str_replace(ROOT, 'ROOT', $error->getFile()), $error->getLine()) ?>
 <?php endif; ?>
 <?php
     echo $this->element('auto_table_warning');
@@ -36,8 +36,8 @@ if (Configure::read('debug')) :
     $this->end();
 endif;
 ?>
-<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
+<h2><?php print __d('cake', 'An Internal Error Has Occurred') ?></h2>
 <p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= h($message) ?>
+    <strong><?php print __d('cake', 'Error') ?>: </strong>
+    <?php print h($message) ?>
 </p>
