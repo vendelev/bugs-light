@@ -12,12 +12,12 @@ print $this->element('menu');
         <thead>
             <tr>
                 <th scope="col"><?php print __('Task') ?></th>
-                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('owner_id') ?></th>
-                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('worker_id') ?></th>
+                <th scope="col" style="width:250px"><?php print $this->Paginator->sort('owner_id') ?></th>
+                <th scope="col" style="width:250px"><?php print $this->Paginator->sort('worker_id') ?></th>
                 <th scope="col" style="width:210px"><?php print $this->Paginator->sort('type_id') ?></th>
                 <th scope="col" style="width:100px"><?php print $this->Paginator->sort('status_id') ?></th>
-                <th scope="col" style="width:180px"><?php print $this->Paginator->sort('created') ?></th>
-                <th scope="col" style="width:180px"><?php print $this->Paginator->sort('modified') ?></th>
+                <th scope="col" style="width:150px"><?php print $this->Paginator->sort('created') ?></th>
+                <th scope="col" style="width:150px"><?php print $this->Paginator->sort('modified') ?></th>
                 <th scope="col" style="width:100px" class="actions"><?php print __('Actions') ?></th>
             </tr>
         </thead>
@@ -28,40 +28,12 @@ print $this->element('menu');
                     print $this->Number->format($task->id) .'. ';
                     print $this->Html->link($this->Text->truncate($task->title, 40), ['action' => 'view', $task->id]);
                     ?></td>
-                <td><?php
-                    $value = '';
-                    if ($task->has('owner')) {
-                        if ($task->owner->deleted) {
-                            $value = h($task->owner->name);
-                        } else {
-                            $value = $this->Html->link(
-                                    $task->owner->name,
-                                    ['controller' => 'Users', 'action' => 'view', $task->owner->id]
-                            );
-                        }
-                    }
-
-                    print $value;
-                    ?></td>
-                <td><?php
-                    $value = '';
-                    if ($task->has('worker')) {
-                        if ($task->worker->deleted) {
-                            $value = h($task->worker->name);
-                        } else {
-                            $value = $this->Html->link(
-                                    $task->worker->name,
-                                    ['controller' => 'Users', 'action' => 'view', $task->worker->id]
-                            );
-                        }
-                    }
-
-                    print $value;
-                    ?></td>
+                <td><?php print $task->has('owner') ? $this->element('user', ['user' => $task->owner]) : '' ?></td>
+                <td><?php print $task->has('worker') ? $this->element('user', ['user' => $task->worker]) : '' ?></td>
                 <td><?php print $task->has('task_type') ? h($task->task_type->title) : '' ?></td>
                 <td><?php print $task->has('task_status') ? h($task->task_status->title) : '' ?></td>
-                <td><?php print $this->Time->nice($task->created, null, 'ru'); ?></td>
-                <td><?php print $this->Time->nice($task->modified, null, 'ru') ?></td>
+                <td><?php print h($task->created) ?></td>
+                <td><?php print h($task->modified) ?></td>
                 <td class="actions">
                     <?php print $this->Html->link(__('Edit'), ['action' => 'edit', $task->id]) ?>
                     <?php print $this->Form->postLink(__('Delete'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id)]) ?>
