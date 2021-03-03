@@ -6,7 +6,7 @@ class O1UsersSeeder extends AbstractSeed
 {
     public function run(): void
     {
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('ru_RU');
         $data = [];
         for ($i = 0; $i < 10; $i++) {
             $data[] = [

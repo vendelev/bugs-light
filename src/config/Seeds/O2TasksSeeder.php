@@ -6,7 +6,7 @@ class O2TasksSeeder extends AbstractSeed
 {
     public function run(): void
     {
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('ru_RU');
         $tasks = [];
         $usersCnt = $this->fetchRow('select count(id) as cnt from users');
         $maxId = $usersCnt['cnt'];
