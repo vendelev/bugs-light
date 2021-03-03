@@ -90,9 +90,9 @@ class TasksTable extends Table
             ->notEmptyString('title');
 
         $validator
-            ->scalar('desc')
-            ->requirePresence('desc', 'create')
-            ->notEmptyString('desc');
+            ->scalar('description')
+            ->requirePresence('description', 'create')
+            ->notEmptyString('description');
 
         $validator
             ->dateTime('deleted')
@@ -110,8 +110,8 @@ class TasksTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['owner_id'], 'Users'));
-        $rules->add($rules->existsIn(['worker_id'], 'Users'));
+        $rules->add($rules->existsIn(['owner_id'], 'Owners'));
+        $rules->add($rules->existsIn(['worker_id'], 'Workers'));
         $rules->add($rules->existsIn(['type_id'], 'TaskTypes'));
         $rules->add($rules->existsIn(['status_id'], 'TaskStatuses'));
 

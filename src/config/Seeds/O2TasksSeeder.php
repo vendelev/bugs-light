@@ -14,7 +14,7 @@ class O2TasksSeeder extends AbstractSeed
         for ($ii = 0; $ii < 10; $ii++) {
             $tasks[] = [
                 'title'   => $faker->text(),
-                'desc'     => $faker->paragraph(),
+                'description' => $faker->paragraph(),
                 'owner_id' => random_int(1, $maxId),
                 'worker_id'=> $faker->randomElement([random_int(1, $maxId), null]),
                 'type_id'  => random_int(1, 3),

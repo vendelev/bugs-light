@@ -37,7 +37,7 @@ print $this->element('menu');
     </table>
     <div class="row">
         <h4><?php print __('Описание') ?></h4>
-        <?php print $this->Text->autoParagraph(h($task->desc)); ?>
+        <?php print $this->Text->autoParagraph(h($task->description)); ?>
     </div>
     <div class="related">
         <h4><?php print __('Комментарии') ?></h4>

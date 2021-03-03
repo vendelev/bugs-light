@@ -54,8 +54,8 @@ class CreateTasks extends AbstractMigration
             ->addColumn('title', 'text', [
                 'null' => false,
             ])
-            ->addColumn('desc', 'text', [
-                'null' => false,
+            ->addColumn('description', 'text', [
+                'null' => true,
             ])
             ->addColumn('owner_id', 'integer', [
                 'null' => false,
