@@ -16,6 +16,8 @@
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
 $this->assign('title', __('Баг треккер лайт'));
+
+/** @var \App\Model\Entity\User $currentUser */
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +47,7 @@ $this->assign('title', __('Баг треккер лайт'));
         <div class="top-bar-section">
             <ul class="right">
                 <?php
-                if ($isAuth) { ?>
+                if ($currentUser) { ?>
                 <li><a href="<?php print $this->Url->build(['controller' => 'users', 'action' => 'logout']); ?>"
                     ><?php print __('Выход'); ?></a></li>
                 <?php } ?>

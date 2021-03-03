@@ -114,6 +114,13 @@ class TasksController extends AppController
         $task = $this->Tasks->get($id, [
             'contain' => [],
         ]);
+
+        $userId = $this->Auth->user('id');
+        if ($task->owner_id !== $userId && $task->worker_id !== $userId) {
+            $this->Flash->error(__('Вы можете только просматривать'));
+            return $this->redirect(['action' => 'view', $task->id]);
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
             if ($this->Tasks->save($task)) {
@@ -151,13 +158,19 @@ class TasksController extends AppController
      * Delete method
      *
      * @param string|null $id Task id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $task = $this->Tasks->get($id);
+
+        if ($task->owner_id !== $this->Auth->user('id')) {
+            $this->Flash->error(__('Вы можете только просматривать'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->Tasks->delete($task)) {
             $this->Flash->success(__('The task has been deleted.'));
         } else {

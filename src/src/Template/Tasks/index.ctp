@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Task[]|\Cake\Collection\CollectionInterface $tasks
+ * @var \App\Model\Entity\User $currentUser
  */
 
 print $this->element('menu');
@@ -35,8 +36,15 @@ print $this->element('menu');
                 <td><?php print h($task->created) ?></td>
                 <td><?php print h($task->modified) ?></td>
                 <td class="actions">
-                    <?php print $this->Html->link(__('Edit'), ['action' => 'edit', $task->id]) ?>
-                    <?php print $this->Form->postLink(__('Delete'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id)]) ?>
+                    <?php
+                    if ($task->owner->id === $currentUser['id'] || ($task->worker && $task->worker->id === $currentUser['id'])) {
+                        print $this->Html->link(__('Edit'), ['action' => 'edit', $task->id]);
+                    }
+                    if ($task->owner->id === $currentUser['id']) {
+                        print '&nbsp;';
+                        print $this->Form->postLink(__('Delete'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id)]);
+                    }
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
