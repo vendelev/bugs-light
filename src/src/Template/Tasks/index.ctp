@@ -6,25 +6,28 @@
 
 print $this->element('menu');
 ?>
-<div class="tasks index large-9 medium-8 columns content">
+<div class="tasks index large-10 medium-8 columns content">
     <h3><?php print __('Список задач') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?php print $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('owner_id') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('worker_id') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('type_id') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('status_id') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?php print $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?php print __('Actions') ?></th>
+                <th scope="col"><?php print __('Task') ?></th>
+                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('owner_id') ?></th>
+                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('worker_id') ?></th>
+                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('type_id') ?></th>
+                <th scope="col" style="width:100px"><?php print $this->Paginator->sort('status_id') ?></th>
+                <th scope="col" style="width:180px"><?php print $this->Paginator->sort('created') ?></th>
+                <th scope="col" style="width:180px"><?php print $this->Paginator->sort('modified') ?></th>
+                <th scope="col" style="width:100px" class="actions"><?php print __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($tasks as $task): ?>
             <tr>
-                <td><?php print $this->Number->format($task->id) ?></td>
+                <td><?php
+                    print $this->Number->format($task->id) .'. ';
+                    print $this->Html->link($this->Text->truncate($task->title, 40), ['action' => 'view', $task->id]);
+                    ?></td>
                 <td><?php
                     $value = '';
                     if ($task->has('owner')) {
@@ -60,7 +63,6 @@ print $this->element('menu');
                 <td><?php print $this->Time->nice($task->created, null, 'ru'); ?></td>
                 <td><?php print $this->Time->nice($task->modified, null, 'ru') ?></td>
                 <td class="actions">
-                    <?php print $this->Html->link(__('View'), ['action' => 'view', $task->id]) ?>
                     <?php print $this->Html->link(__('Edit'), ['action' => 'edit', $task->id]) ?>
                     <?php print $this->Form->postLink(__('Delete'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id)]) ?>
                 </td>
