@@ -17,31 +17,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Html->charset() ?>
+    <?php print $this->Html->charset() ?>
     <title>
-        <?= $this->fetch('title') ?>
+        <?php print $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
+    <?php print $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
+    <?php print $this->Html->css('base.css') ?>
+    <?php print $this->Html->css('style.css') ?>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?php print $this->fetch('meta') ?>
+    <?php print $this->fetch('css') ?>
+    <?php print $this->fetch('script') ?>
 </head>
 <body>
     <div id="container">
         <div id="header">
-            <h1><?= __('Error') ?></h1>
+            <h1><?php print __('Error') ?></h1>
         </div>
         <div id="content">
-            <?= $this->Flash->render() ?>
+            <?php print $this->Flash->render() ?>
 
-            <?= $this->fetch('content') ?>
+            <?php print $this->fetch('content') ?>
         </div>
         <div id="footer">
-            <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
+            <?php print $this->Html->link(__('Back'), 'javascript:history.back()') ?>
         </div>
     </div>
 </body>
