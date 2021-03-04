@@ -13,12 +13,12 @@ print $this->element('menu');
         <thead>
             <tr>
                 <th scope="col"><?php print __('Task') ?></th>
-                <th scope="col" style="width:250px"><?php print $this->Paginator->sort('owner_id') ?></th>
-                <th scope="col" style="width:250px"><?php print $this->Paginator->sort('worker_id') ?></th>
-                <th scope="col" style="width:210px"><?php print $this->Paginator->sort('type_id') ?></th>
-                <th scope="col" style="width:100px"><?php print $this->Paginator->sort('status_id') ?></th>
-                <th scope="col" style="width:150px"><?php print $this->Paginator->sort('created') ?></th>
-                <th scope="col" style="width:150px"><?php print $this->Paginator->sort('modified') ?></th>
+                <th scope="col" style="width:250px"><?php print __('Owner') ?></th>
+                <th scope="col" style="width:250px"><?php print __('Worker') ?></th>
+                <th scope="col" style="width:210px"><?php print $this->MultiSortPaginator->sort('type_id', null, $currentTableOrder) ?></th>
+                <th scope="col" style="width:100px"><?php print $this->MultiSortPaginator->sort('status_id', null, $currentTableOrder) ?></th>
+                <th scope="col" style="width:150px"><?php print $this->MultiSortPaginator->sort('created', null, $currentTableOrder) ?></th>
+                <th scope="col" style="width:150px"><?php print $this->MultiSortPaginator->sort('modified', null, $currentTableOrder) ?></th>
                 <th scope="col" style="width:100px" class="actions"><?php print __('Actions') ?></th>
             </tr>
         </thead>
