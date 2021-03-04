@@ -6,7 +6,7 @@
 
 print $this->element('menu');
 ?>
-<div class="tasks form large-9 medium-8 columns content">
+<div class="tasks form large-10 medium-8 columns content">
     <?php print $this->Form->create($task) ?>
     <fieldset>
         <legend><?php print __('Добавить задачу') ?></legend>

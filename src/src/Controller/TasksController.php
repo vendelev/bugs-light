@@ -35,9 +35,18 @@ class TasksController extends AppController
                 }
             ],
         ];
-        $tasks = $this->paginate($this->Tasks);
 
-        $this->set(compact('tasks'));
+        $order = $this->getRequest()->getQueryParams()['order'] ?? [];
+        $tasks = $this->paginate(
+            $this->Tasks,
+            [
+                'order' => $order,
+                'sortWhitelist' => ['type_id', 'status_id', 'created', 'modified']
+            ]
+        );
+
+        $this->set('tasks', $tasks);
+        $this->set('currentTableOrder', ['order' => $order]);
     }
 
     /**
@@ -72,6 +81,7 @@ class TasksController extends AppController
         ]);
 
         $this->set('task', $task);
+        $this->set('newComment', $this->loadModel('TaskComments')->newEntity(['task_id' => $id]));
     }
 
     /**

@@ -13,12 +13,15 @@
  */
 namespace App\View;
 
+use App\View\Helper\MultiSortPaginatorHelper;
 use Cake\View\View;
 
 /**
  * Application View
  *
  * Your application's default view class
+ *
+ * @property MultiSortPaginatorHelper $MultiSortPaginator
  *
  * @link https://book.cakephp.org/3/en/views.html#the-app-view
  */
@@ -36,5 +39,7 @@ class AppView extends View
      */
     public function initialize()
     {
+        parent::initialize();
+        $this->loadHelper(MultiSortPaginatorHelper::class);
     }
 }
