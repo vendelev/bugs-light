@@ -72,6 +72,7 @@ class TasksController extends AppController
         ]);
 
         $this->set('task', $task);
+        $this->set('newComment', $this->loadModel('TaskComments')->newEntity(['task_id' => $id]));
     }
 
     /**

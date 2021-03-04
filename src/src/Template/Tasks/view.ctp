@@ -52,15 +52,26 @@ print $this->element('menu');
             <?php foreach ($task->task_comments as $taskComments): ?>
             <tr>
                 <td><?php print h($taskComments->user->name) ?></td>
-                <td><?php print h($taskComments->message) ?></td>
+                <td><?php print nl2br(h($taskComments->message)) ?></td>
                 <td><?php print h($taskComments->created) ?></td>
                 <td class="actions">
-                    <?php print $this->Html->link(__('Edit'), ['controller' => 'TaskComments', 'action' => 'edit', $taskComments->id]) ?>
-                    <?php print $this->Form->postLink(__('Delete'), ['controller' => 'TaskComments', 'action' => 'delete', $taskComments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $taskComments->id)]) ?>
+                    <?php
+                    if ($currentUser['id'] === $taskComments->user_id) {
+                        print $this->Form->postLink(__('Delete'), ['controller' => 'TaskComments', 'action' => 'delete', $taskComments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $taskComments->id)]);
+                    } ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
     </div>
+</div>
+<div class="tasks form large-10 medium-8 columns content">
+    <?php print $this->Form->create($newComment, ['url' => ['controller' => 'TaskComments', 'action' => 'add', $task->id]]) ?>
+    <fieldset>
+        <legend><?php print __('Добавить комментарий') ?></legend>
+        <?php echo $this->Form->control('message');?>
+    </fieldset>
+    <?php print $this->Form->button(__('Сохранить')) ?>
+    <?php print $this->Form->end() ?>
 </div>
