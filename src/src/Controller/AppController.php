@@ -72,8 +72,11 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
 
-//    public function isAuthorized($user): bool
-//    {
-//        return true;
-//    }
+    protected function getRequestAllData(): array
+    {
+        /** @var array $data */
+        $data = $this->request->getData();
+
+        return $data;
+    }
 }
