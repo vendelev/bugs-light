@@ -14,12 +14,8 @@
  */
 namespace App\Test\TestCase\Controller;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\TestSuite\IntegrationTestCase;
-use Cake\View\Exception\MissingTemplateException;
 
 /**
  * PagesControllerTest class
@@ -33,11 +29,11 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMultipleGet()
+    public function testMultipleGet(): void
     {
-        $this->get('/');
+        $this->get('/info');
         $this->assertResponseOk();
-        $this->get('/');
+        $this->get('/info');
         $this->assertResponseOk();
     }
 
@@ -46,7 +42,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testDisplay()
+    public function testDisplay(): void
     {
         $this->get('/pages/home');
         $this->assertResponseOk();
@@ -59,7 +55,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMissingTemplate()
+    public function testMissingTemplate(): void
     {
         Configure::write('debug', false);
         $this->get('/pages/not_existing');
@@ -73,7 +69,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMissingTemplateInDebug()
+    public function testMissingTemplateInDebug(): void
     {
         Configure::write('debug', true);
         $this->get('/pages/not_existing');
@@ -89,7 +85,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testDirectoryTraversalProtection()
+    public function testDirectoryTraversalProtection(): void
     {
         $this->get('/pages/../Layout/ajax');
         $this->assertResponseCode(403);
@@ -101,7 +97,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @reutrn void
      */
-    public function testCsrfAppliedError()
+    public function testCsrfAppliedError(): void
     {
         $this->post('/pages/home', ['hello' => 'world']);
 
@@ -114,7 +110,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @reutrn void
      */
-    public function testCsrfAppliedOk()
+    public function testCsrfAppliedOk(): void
     {
         $this->enableCsrfToken();
         $this->post('/pages/home', ['hello' => 'world']);

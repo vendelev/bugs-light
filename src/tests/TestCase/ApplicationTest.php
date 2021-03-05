@@ -33,16 +33,17 @@ class ApplicationTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testBootstrap()
+    public function testBootstrap(): void
     {
         $app = new Application(dirname(dirname(__DIR__)) . '/config');
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
-        $this->assertCount(3, $plugins);
-        $this->assertSame('Bake', $plugins->get('Bake')->getName());
-        $this->assertSame('Migrations', $plugins->get('Migrations')->getName());
-        $this->assertSame('DebugKit', $plugins->get('DebugKit')->getName());
+        self::assertCount(4, $plugins);
+        self::assertSame('Bake', $plugins->get('Bake')->getName());
+        self::assertSame('Migrations', $plugins->get('Migrations')->getName());
+        self::assertSame('DebugKit', $plugins->get('DebugKit')->getName());
+        self::assertSame('SoftDelete', $plugins->get('SoftDelete')->getName());
     }
 
     /**
@@ -50,7 +51,7 @@ class ApplicationTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testBootstrapPluginWithoutHalt()
+    public function testBootstrapPluginWithoutHalt(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -70,15 +71,15 @@ class ApplicationTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMiddleware()
+    public function testMiddleware(): void
     {
         $app = new Application(dirname(dirname(__DIR__)) . '/config');
         $middleware = new MiddlewareQueue();
 
         $middleware = $app->middleware($middleware);
 
-        $this->assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
-        $this->assertInstanceOf(AssetMiddleware::class, $middleware->get(1));
-        $this->assertInstanceOf(RoutingMiddleware::class, $middleware->get(2));
+        self::assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
+        self::assertInstanceOf(AssetMiddleware::class, $middleware->get(1));
+        self::assertInstanceOf(RoutingMiddleware::class, $middleware->get(2));
     }
 }

@@ -32,7 +32,7 @@ class PagesController extends AppController
     {
         parent::initialize();
 
-        $this->Auth->allow(['display']);
+        $this->Auth->allow(['info', 'display']);
     }
 
     public function home(): void

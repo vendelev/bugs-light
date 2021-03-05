@@ -22,6 +22,9 @@ cs: ok
 	echo "CodeSniffer: \033[30m \033[42m  OK  \033[0m"
 
 psalm:
-	@$(EXEC) php-bugs ./vendor/bin/psalm
+	@$(EXEC) php-bugs ./vendor/bin/psalm.phar
 
-app-ok: ok vendor cs psalm
+phpunit:
+	@$(EXEC) php-bugs ./vendor/bin/phpunit
+
+app-ok: ok perms cs psalm phpunit
