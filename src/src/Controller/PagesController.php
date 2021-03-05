@@ -37,12 +37,10 @@ class PagesController extends AppController
 
     public function home(): void
     {
-
     }
 
     public function info(): void
     {
-
     }
 
     /**

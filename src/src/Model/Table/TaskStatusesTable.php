@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\TaskStatus;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use SoftDelete\Model\Table\SoftDeleteTrait;
@@ -8,14 +9,14 @@ use SoftDelete\Model\Table\SoftDeleteTrait;
 /**
  * TaskStatuses Model
  *
- * @method \App\Model\Entity\TaskStatus get($primaryKey, $options = [])
- * @method \App\Model\Entity\TaskStatus newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\TaskStatus[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TaskStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TaskStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TaskStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\TaskStatus[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\TaskStatus findOrCreate($search, callable $callback = null, $options = [])
+ * @method TaskStatus get($primaryKey, $options = [])
+ * @method TaskStatus newEntity($data = null, array $options = [])
+ * @method TaskStatus[] newEntities(array $data, array $options = [])
+ * @method TaskStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method TaskStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method TaskStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method TaskStatus[] patchEntities($entities, array $data, array $options = [])
+ * @method TaskStatus findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\TaskComment;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,14 +13,14 @@ use SoftDelete\Model\Table\SoftDeleteTrait;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\TasksTable&\Cake\ORM\Association\BelongsTo $Tasks
  *
- * @method \App\Model\Entity\TaskComment get($primaryKey, $options = [])
- * @method \App\Model\Entity\TaskComment newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\TaskComment[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TaskComment|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TaskComment saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TaskComment patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\TaskComment[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\TaskComment findOrCreate($search, callable $callback = null, $options = [])
+ * @method TaskComment get($primaryKey, $options = [])
+ * @method TaskComment newEntity($data = null, array $options = [])
+ * @method TaskComment[] newEntities(array $data, array $options = [])
+ * @method TaskComment|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method TaskComment saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method TaskComment patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method TaskComment[] patchEntities($entities, array $data, array $options = [])
+ * @method TaskComment findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
