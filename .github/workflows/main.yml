@@ -4,9 +4,6 @@ name: Testing CakePHP with MySQL
 on: [push, pull_request]
 jobs:
     tests:
-        strategy:
-            matrix:
-                php-versions: ['7.4']
         runs-on: ubuntu-latest
         services:
             mysql:
@@ -29,7 +26,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php-versions }}
+                  php-version: '7.4'
                   # You can also use ext-apcu or ext-memcached instead of ext-redis
                   # Install memcached if using ext-memcached
                   extensions: mbstring, intl, redis, pdo_mysql
@@ -70,7 +67,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.3'
+                  php-version: '7.4'
                   extensions: mbstring, intl
             - name: Get composer cache directory
               id: composer-cache
