@@ -11,7 +11,7 @@ on: [push, pull_request]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
     # This workflow contains a single job called "build"
-    build:
+    test:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
         services:
@@ -21,6 +21,8 @@ jobs:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: 12345
                     MYSQL_DATABASE: test_myapp
+                    MYSQL_USER: my_app
+                    MYSQL_PASSWORD: secret
                 ports:
                     - 3306/tcp
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -35,6 +37,9 @@ jobs:
               with:
                   php-version: '7.4'
                   extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
+
+            - name: Start mysql service
+              run: sudo /etc/init.d/mysql start
 
             - name: Install dependencies
               run: cd ./src && composer install
