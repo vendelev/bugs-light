@@ -33,7 +33,7 @@ jobs:
               uses: pipeline-components/php-codesniffer@v0.12.3
               with:
                   # Directory to check
-                  directory: ./src
+                  directory: ./src/src
                   # Additional options
                   options: -s -p --colors --extensions=php --standard=./src/phpcs.xml.dist
 
