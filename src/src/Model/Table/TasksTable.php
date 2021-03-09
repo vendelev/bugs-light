@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Task;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -15,14 +16,14 @@ use SoftDelete\Model\Table\SoftDeleteTrait;
  * @property \App\Model\Table\TaskStatusesTable&\Cake\ORM\Association\BelongsTo $TaskStatuses
  * @property \App\Model\Table\TaskCommentsTable&\Cake\ORM\Association\HasMany $TaskComments
  *
- * @method \App\Model\Entity\Task get($primaryKey, $options = [])
- * @method \App\Model\Entity\Task newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Task[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Task|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Task saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Task patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Task[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Task findOrCreate($search, callable $callback = null, $options = [])
+ * @method Task get($primaryKey, $options = [])
+ * @method Task newEntity($data = null, array $options = [])
+ * @method Task[] newEntities(array $data, array $options = [])
+ * @method Task|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method Task saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method Task patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method Task[] patchEntities($entities, array $data, array $options = [])
+ * @method Task findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

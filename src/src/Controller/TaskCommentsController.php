@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Model\Table\TaskCommentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Response;
@@ -15,17 +14,18 @@ class TaskCommentsController extends AppController
     /**
      * Add method
      *
-     * @param string $id Task id.
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @param int $id Task id.
+     *
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($id): ?Response
+    public function add(int $id): ?Response
     {
         $comment = $this->TaskComments->newEntity();
         $comment->task_id = $id;
         $comment->user_id = $this->Auth->user('id');
 
         if ($this->request->is('post')) {
-            $task = $this->TaskComments->patchEntity($comment, $this->request->getData());
+            $task = $this->TaskComments->patchEntity($comment, $this->getRequestAllData());
             if ($this->TaskComments->save($task)) {
                 $this->Flash->success(__('Комментарий добавлен'));
             } else {
@@ -39,11 +39,11 @@ class TaskCommentsController extends AppController
     /**
      * Delete method
      *
-     * @param string $id Task id.
+     * @param int $id Task id.
      * @return Response|null Redirects to index.
      * @throws RecordNotFoundException When record not found.
      */
-    public function delete($id): ?Response
+    public function delete(int $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $comment = $this->TaskComments->get($id);

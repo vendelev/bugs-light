@@ -7,7 +7,10 @@ use Cake\View\Helper\PaginatorHelper;
 
 class MultiSortPaginatorHelper extends PaginatorHelper
 {
-    public function sort($key, $title = null, array $options = [])
+    /**
+     * @inheritdoc
+     */
+    public function sort($key, $title = null, array $options = []): string
     {
         $options += ['url' => [], 'model' => null, 'escape' => true, 'order' => []];
         $url = $options['url'];
@@ -78,6 +81,6 @@ class MultiSortPaginatorHelper extends PaginatorHelper
             'url' => $this->generateUrl($url, $options['model']),
         ];
 
-        return $this->templater()->format($template, $vars);
+        return (string)$this->templater()->format($template, $vars);
     }
 }

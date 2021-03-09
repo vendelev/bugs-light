@@ -1,19 +1,15 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entity\Task;
 use App\Model\Table\TasksTable;
 use App\Model\Table\UsersTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Http\Response;
 use Cake\ORM\Query;
 
 /**
  * @property TasksTable $Tasks
  * @property UsersTable $Users
- *
- * @method Task[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TasksController extends AppController
 {
@@ -87,13 +83,13 @@ class TasksController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add(): ?Response
     {
         $task = $this->Tasks->newEntity();
         if ($this->request->is('post')) {
-            $task = $this->Tasks->patchEntity($task, $this->request->getData());
+            $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
@@ -114,8 +110,8 @@ class TasksController extends AppController
      * Edit method
      *
      * @param string|null $id Task id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null): ?Response
     {
@@ -132,7 +128,7 @@ class TasksController extends AppController
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $task = $this->Tasks->patchEntity($task, $this->request->getData());
+            $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
@@ -141,7 +137,7 @@ class TasksController extends AppController
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
 
-        /** @var UsersTable|Query $users */
+        /** @var Query $users */
         $users = $this->loadModel('Users')->find('list', ['limit' => 200]);
         $users->union(
             $this->Users
