@@ -20,12 +20,12 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-#            - name: Run composer
-#              uses: nick-zh/composer-php@master
-#              env:
-#                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
-#              with:
-#                  action: 'install -oa'
+            - name: Run composer
+              uses: nick-zh/composer-php@master
+              env:
+                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
+              with:
+                  action: '--working-dir=./src install -oa'
 
             - name: php-codesniffer
                 # You may pin to the exact commit or the version.
@@ -57,7 +57,7 @@ jobs:
                   # Space separated list of extensions to configure with the PHP build
                   php_extensions: # optional
                   # Configuration file location
-                  configuration: # optional
+                  configuration: ./src/phpunit.xml.dist
                   # JUnit output file location
                   log_junit: # optional
                   # JUnit output file location
