@@ -44,9 +44,9 @@ jobs:
               uses: php-actions/phpunit@v2
               with:
                   # What version of PHPUnit to use
-                  version: # optional, default is latest
+                  version: 6.5
                   # What version of PHP to use
-                  php_version: # optional, default is latest
+                  php_version: 7.4
                   # Space separated list of extensions to configure with the PHP build
                   php_extensions: # optional
                   # Configuration file location
