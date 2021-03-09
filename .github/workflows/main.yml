@@ -24,13 +24,13 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: '7.4'
-                  extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
+                  extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
 
             - name: Install dependencies
               run: cd ./src && composer install
 
             - name: PHP-CodeSniffer
-              run: cd ./src && ./vendor/bin/phpcs
+              run: cd ./src && ./vendor/bin/phpcs -p
 
             - name: Psalm
               run: cd ./src && ./vendor/bin/psalm.phar
