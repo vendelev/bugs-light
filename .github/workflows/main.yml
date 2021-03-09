@@ -78,4 +78,4 @@ jobs:
                   # Path to directory to whitelist for code coverage analysis
                   whitelist: # optional
                   # Extra arguments to pass to the phpunit binary
-                  args: # optional
+                  args: -v
