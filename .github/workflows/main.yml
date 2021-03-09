@@ -14,14 +14,16 @@ jobs:
     build:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
-#        services:
-#            mysql:
-#                image: mysql:5.7
-#                env:
-#                    MYSQL_ROOT_PASSWORD: password
-#                ports:
-#                    - 3306
-#                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: false
+                    MYSQL_ROOT_PASSWORD: 12345
+                    MYSQL_DATABASE: test_myapp
+                ports:
+                    - 3306/tcp
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
@@ -34,18 +36,6 @@ jobs:
                   php-version: '7.4'
                   extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
 
-            - uses: mirromutth/mysql-action@v1.1
-              with:
-                  host port: 3306 # Optional, default value is 3306. The port of host
-                  container port: 3306 # Optional, default value is 3306. The port of container
-                  character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-                  collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-                  mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
-                  mysql database: 'test' # Optional, default value is "test". The specified database which will be create
-                  mysql root password: 12345 # Required if "mysql user" is empty, default is empty. The root superuser password
-                  mysql user: 'my_app' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-                  mysql password: 'secret' # Required if "mysql user" exists. The password for the "mysql user"
-
             - name: Install dependencies
               run: cd ./src && composer install
 
@@ -56,7 +46,9 @@ jobs:
               run: cd ./src && ./vendor/bin/psalm.phar
 
             - name: PHPUnit
-              run: ls -la ./src/vendor/cakephp/cakephp/src/Database/ && cd ./src && ./vendor/bin/phpunit -v
+              run: cd ./src && ./vendor/bin/phpunit -v
+              env:
+                  DB_DSN: "mysql://root:12345@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/test_myapp?init[]=SET sql_mode = \"STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION\""
 
 #            - name: Install dependencies
 #                  uses: php-actions/composer@v5
