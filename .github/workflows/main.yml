@@ -22,6 +22,8 @@ jobs:
 
             - name: Run composer
               uses: nick-zh/composer-php@master
+              env:
+                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
               with:
                   action: 'install -oa'
 
