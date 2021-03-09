@@ -27,7 +27,7 @@ jobs:
             - name: Start mysql service
               run: |
                 sudo /etc/init.d/mysql start
-                mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
+                mysql -uroot -p${{ secrets.RootPassword }} -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
 
             - name: Setup config
               run: |
