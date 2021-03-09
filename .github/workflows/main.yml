@@ -56,7 +56,7 @@ jobs:
               run: cd ./src && ./vendor/bin/psalm.phar
 
             - name: PHPUnit
-              run: cd ./src && ./vendor/bin/phpunit -v
+              run: ls -la ./src/vendor/cakephp/cakephp/src/Database/ && cd ./src && ./vendor/bin/phpunit -v
 
 #            - name: Install dependencies
 #                  uses: php-actions/composer@v5
