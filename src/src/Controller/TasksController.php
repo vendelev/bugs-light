@@ -116,21 +116,9 @@ class TasksController extends AppController
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
 
-        /** @var Query $users */
-        $users = $this->loadModel('Users')->find('list', ['limit' => 200]);
-        $users->union(
-            $this->Users
-                ->find('all', ['conditions' => ['id' => $task->owner_id], 'withDeleted'])
-                ->select(['id', 'name'])
-        );
-
-        if ($task->worker_id) {
-            $users->union(
-                $this->Users
-                    ->find('all', ['conditions' => ['id' => $task->worker_id], 'withDeleted'])
-                    ->select(['id', 'name'])
-            );
-        }
+        /** @var UsersTable $repo */
+        $repo = $this->loadModel('Users');
+        $users = $repo->findForEditTaskForm($task->owner_id, $task->worker_id);
 
         $taskTypes = $this->Tasks->TaskTypes->find('list', ['limit' => 200]);
         $taskStatuses = $this->Tasks->TaskStatuses->find('list', ['limit' => 200]);

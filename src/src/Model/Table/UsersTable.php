@@ -3,6 +3,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use Cake\Datasource\EntityInterface;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -94,12 +95,31 @@ class UsersTable extends Table
         return $rules;
     }
 
-//    public function findAuth(\Cake\ORM\Query $query, array $options)
-//    {
-//        $query
-////            ->select(['id', 'email', 'pass'])
-//            ->where(['Users.deleted is null']);
-//
-//        return $query;
-//    }
+    /**
+     * Список пользователей с удаленными владельцами и раотниками для формы редактирования
+     *
+     * @param int      $ownerId
+     * @param int|null $workerId
+     *
+     * @return Query
+     */
+    public function findForEditTaskForm(int $ownerId, ?int $workerId): Query
+    {
+        $users = $this->find('list', ['limit' => 200]);
+        $users->union(
+            $this
+                ->find('all', ['conditions' => ['id' => $ownerId], 'withDeleted'])
+                ->select(['id', 'name'])
+        );
+
+        if ($workerId) {
+            $users->union(
+                $this
+                    ->find('all', ['conditions' => ['id' => $workerId], 'withDeleted'])
+                    ->select(['id', 'name'])
+            );
+        }
+
+        return $users;
+    }
 }
