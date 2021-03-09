@@ -20,62 +20,82 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-            - name: php-codesniffer
-                # You may pin to the exact commit or the version.
-                # uses: pipeline-components/php-codesniffer@e3341450afba37fab4275b31f041646a26b2da9d
-              uses: pipeline-components/php-codesniffer@v0.12.3
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
               with:
-                  # Directory to check
-                  directory: ./src/src
-                  # Additional options
-                  options: -s -p --colors --extensions=php --standard=./src/phpcs.xml.dist
+                  php-version: '7.4'
+                  extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
 
-            - name: Psalm Security Scan
-              uses: docker://ghcr.io/psalm/psalm-security-scan
+            - name: Change directory
+              run: cd ./src
 
-            - name: Upload Security Analysis results to GitHub
-              uses: github/codeql-action/upload-sarif@v1
-              with:
-                sarif_file: results.sarif
+            - name: Install dependencies
+              run: composer install
 
-            - name: PHPUnit (php-actions)
-                # You may pin to the exact commit or the version.
-                # uses: php-actions/phpunit@a182eaa14350a89671a73588ac5f2d11e3e5ee81
-              uses: php-actions/phpunit@v2
-              with:
-                  # What version of PHPUnit to use
-                  version: 6.5
-                  # What version of PHP to use
-                  php_version: 7.4
-                  # Space separated list of extensions to configure with the PHP build
-                  php_extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
-                  # Configuration file location
-                  configuration: ./src/phpunit.xml.dist
-                  # JUnit output file location
-                  log_junit: # optional
-                  # JUnit output file location
-                  log_teamcity: # optional
-                  # JUnit output file location
-                  testdox_html: # optional
-                  # JUnit output file location
-                  testdox_text: # optional
-                  # JUnit output file location
-                  testdox_xml: # optional
-                  # Memory limit
-                  memory_limit: # optional
-                  # Path to bootstrap file
-                  bootstrap: # optional
-                  # Filter which tests to run
-                  filter: # optional
-                  # Specify a testsuite to run
-                  testsuite: # optional
-                  # Only runs tests from the specified group(s)
-                  group: # optional
-                  # Exclude tests from the specified group(s)
-                  exclude_group: # optional
-                  # Only search for test in files with specified suffix(es)
-                  test_suffix: # optional, default is Test.php,.phpt
-                  # Path to directory to whitelist for code coverage analysis
-                  whitelist: # optional
-                  # Extra arguments to pass to the phpunit binary
-                  args: -v
+#            - name: Install dependencies
+#                  uses: php-actions/composer@v5
+#                  with:
+#                      command: install
+#                      interaction: no
+#                      args: --working-dir=./src
+#                      php_version: 7.4
+#
+#            - name: php-codesniffer
+#                # You may pin to the exact commit or the version.
+#                # uses: pipeline-components/php-codesniffer@e3341450afba37fab4275b31f041646a26b2da9d
+#              uses: pipeline-components/php-codesniffer@v0.12.3
+#              with:
+#                  # Directory to check
+#                  directory: ./src/src
+#                  # Additional options
+#                  options: -s -p --colors --extensions=php --standard=./src/phpcs.xml.dist
+#
+#            - name: Psalm Security Scan
+#              uses: docker://ghcr.io/psalm/psalm-security-scan
+#
+#            - name: Upload Security Analysis results to GitHub
+#              uses: github/codeql-action/upload-sarif@v1
+#              with:
+#                sarif_file: results.sarif
+#
+#            - name: PHPUnit (php-actions)
+#                # You may pin to the exact commit or the version.
+#                # uses: php-actions/phpunit@a182eaa14350a89671a73588ac5f2d11e3e5ee81
+#              uses: php-actions/phpunit@v2
+#              with:
+#                  # What version of PHPUnit to use
+#                  version: 6.5
+#                  # What version of PHP to use
+#                  php_version: 7.4
+#                  # Space separated list of extensions to configure with the PHP build
+#                  php_extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
+#                  # Configuration file location
+#                  configuration: ./src/phpunit.xml.dist
+#                  # JUnit output file location
+#                  log_junit: # optional
+#                  # JUnit output file location
+#                  log_teamcity: # optional
+#                  # JUnit output file location
+#                  testdox_html: # optional
+#                  # JUnit output file location
+#                  testdox_text: # optional
+#                  # JUnit output file location
+#                  testdox_xml: # optional
+#                  # Memory limit
+#                  memory_limit: # optional
+#                  # Path to bootstrap file
+#                  bootstrap: # optional
+#                  # Filter which tests to run
+#                  filter: # optional
+#                  # Specify a testsuite to run
+#                  testsuite: # optional
+#                  # Only runs tests from the specified group(s)
+#                  group: # optional
+#                  # Exclude tests from the specified group(s)
+#                  exclude_group: # optional
+#                  # Only search for test in files with specified suffix(es)
+#                  test_suffix: # optional, default is Test.php,.phpt
+#                  # Path to directory to whitelist for code coverage analysis
+#                  whitelist: # optional
+#                  # Extra arguments to pass to the phpunit binary
+#                  args: -v
