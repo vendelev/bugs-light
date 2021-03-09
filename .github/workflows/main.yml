@@ -29,6 +29,15 @@ jobs:
             - name: Install dependencies
               run: cd ./src && composer install
 
+            - name: PHP-CodeSniffer
+              run: cd ./src && ./vendor/bin/phpcs
+
+            - name: Psalm
+              run: cd ./src && ./vendor/bin/psalm.phar
+
+            - name: PHPUnit
+              run: cd ./src && ./vendor/bin/phpunit
+
 #            - name: Install dependencies
 #                  uses: php-actions/composer@v5
 #                  with:
