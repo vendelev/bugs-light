@@ -15,7 +15,9 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\ORM\Query;
 use Cake\Routing\Router;
+use Closure;
 
 /**
  * Application Controller
@@ -70,6 +72,15 @@ class AppController extends Controller
          * see https://book.cakephp.org/3/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+    }
+
+    protected function getWithDeletedClosure(): Closure
+    {
+        return Closure::fromCallable(
+            static function (Query $query) {
+                return $query->applyOptions(['withDeleted']);
+            }
+        );
     }
 
     protected function getRequestAllData(): array
