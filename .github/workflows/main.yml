@@ -17,14 +17,10 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+            - name: Shutdown Ubuntu MySQL (SUDO)
+              run: sudo service mysql stop
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '7.4'
-                  extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
-
-            - name: Set up MySQL 5.7
+          -   name: Set up MySQL 5.7
               uses: mirromutth/mysql-action@master
               with:
                   mysql version: 5.7
@@ -33,6 +29,11 @@ jobs:
                   character set server: 'utf8'
                   collation server: 'utf8_general_ci'
 
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '7.4'
+                  extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
             - name: Setup config
               run: |
                 echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
