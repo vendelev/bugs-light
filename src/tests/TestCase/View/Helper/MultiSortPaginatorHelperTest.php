@@ -9,7 +9,6 @@ use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
-
 class MultiSortPaginatorHelperTest extends TestCase
 {
     use IntegrationTestTrait;

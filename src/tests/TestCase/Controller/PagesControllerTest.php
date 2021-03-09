@@ -18,12 +18,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
-/**
- * PagesControllerTest class
- *
- * @uses \App\Controller\PagesController
- */
-class PagesControllerTest  extends TestCase
+class PagesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 

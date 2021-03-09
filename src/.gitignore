@@ -3,3 +3,4 @@ vendor/
 app_local.php
 /config/Migrations/schema-dump-default.lock
 .phpcs-cache
+/config/Migrations/schema-dump-test.lock

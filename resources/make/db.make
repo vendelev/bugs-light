@@ -4,6 +4,7 @@
 
 migrate-exec:
 	${EXEC} php-bugs bin/cake migrations migrate
+	${EXEC} php-bugs bin/cake migrations migrate -c test
 	${EXEC} php-bugs bin/cake migrations seed
 
 migrate-add:
