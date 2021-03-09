@@ -29,13 +29,13 @@ jobs:
               with:
                   mysql version: 5.7
                   mysql database: test_myapp
-                  mysql root password: ${{ secrets.DatabasePassword }}
+                  mysql root password: root
                   character set server: 'utf8'
                   collation server: 'utf8_general_ci'
 
             - name: Setup config
               run: |
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '${{ secrets.DatabasePassword }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
+                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: cd ./src && composer install
