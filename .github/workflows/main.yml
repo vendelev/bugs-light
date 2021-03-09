@@ -25,9 +25,7 @@ jobs:
                     - 3306/tcp
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-        # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
-            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
             - name: Setup PHP
@@ -41,8 +39,7 @@ jobs:
 
             - name: Setup config
               run: |
-                export DATABASE_TEST_URL="mysql://root:12345@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/test_myapp?init[]=SET sql_mode = \"STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION\""
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '12345', 'port' => ${{ job.services.mysql.ports['3306'] }}]]];" > ./src/config/app_local.php
+                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '12345', 'port' => ${{ job.services.mysql.ports['3306'] }}, 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: cd ./src && composer install
@@ -54,74 +51,7 @@ jobs:
               run: cd ./src && ./vendor/bin/psalm.phar
 
             - name: PHPUnit
-              run: cd ./src && ./vendor/bin/phpunit -v
-#              env:
-#                  DATABASE_TEST_URL: "mysql://root:12345@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/test_myapp?init[]=SET sql_mode = \"STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION\""
-
-#            - name: Install dependencies
-#                  uses: php-actions/composer@v5
-#                  with:
-#                      command: install
-#                      interaction: no
-#                      args: --working-dir=./src
-#                      php_version: 7.4
-#
-#            - name: php-codesniffer
-#                # You may pin to the exact commit or the version.
-#                # uses: pipeline-components/php-codesniffer@e3341450afba37fab4275b31f041646a26b2da9d
-#              uses: pipeline-components/php-codesniffer@v0.12.3
-#              with:
-#                  # Directory to check
-#                  directory: ./src/src
-#                  # Additional options
-#                  options: -s -p --colors --extensions=php --standard=./src/phpcs.xml.dist
-#
-#            - name: Psalm Security Scan
-#              uses: docker://ghcr.io/psalm/psalm-security-scan
-#
-#            - name: Upload Security Analysis results to GitHub
-#              uses: github/codeql-action/upload-sarif@v1
-#              with:
-#                sarif_file: results.sarif
-#
-#            - name: PHPUnit (php-actions)
-#                # You may pin to the exact commit or the version.
-#                # uses: php-actions/phpunit@a182eaa14350a89671a73588ac5f2d11e3e5ee81
-#              uses: php-actions/phpunit@v2
-#              with:
-#                  # What version of PHPUnit to use
-#                  version: 6.5
-#                  # What version of PHP to use
-#                  php_version: 7.4
-#                  # Space separated list of extensions to configure with the PHP build
-#                  php_extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
-#                  # Configuration file location
-#                  configuration: ./src/phpunit.xml.dist
-#                  # JUnit output file location
-#                  log_junit: # optional
-#                  # JUnit output file location
-#                  log_teamcity: # optional
-#                  # JUnit output file location
-#                  testdox_html: # optional
-#                  # JUnit output file location
-#                  testdox_text: # optional
-#                  # JUnit output file location
-#                  testdox_xml: # optional
-#                  # Memory limit
-#                  memory_limit: # optional
-#                  # Path to bootstrap file
-#                  bootstrap: # optional
-#                  # Filter which tests to run
-#                  filter: # optional
-#                  # Specify a testsuite to run
-#                  testsuite: # optional
-#                  # Only runs tests from the specified group(s)
-#                  group: # optional
-#                  # Exclude tests from the specified group(s)
-#                  exclude_group: # optional
-#                  # Only search for test in files with specified suffix(es)
-#                  test_suffix: # optional, default is Test.php,.phpt
-#                  # Path to directory to whitelist for code coverage analysis
-#                  whitelist: # optional
-#                  # Extra arguments to pass to the phpunit binary
-#                  args: -v
+              run: |
+                cd ./src
+                bin/cake migrations migrate -c test
+                ./vendor/bin/phpunit -v
