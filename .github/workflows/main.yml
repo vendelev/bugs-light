@@ -36,12 +36,12 @@ jobs:
             - name: Start mysql service
               run: |
                 sudo /etc/init.d/mysql start
-                mysql -uroot -p${{ secrets.RootPassword }} -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
-                mysql -uroot -p${{ secrets.RootPassword }} -v
+                mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
+                mysql -V
 
             - name: Setup config
               run: |
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '${{ secrets.RootPassword }}', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
+                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: |
@@ -58,8 +58,12 @@ jobs:
                 cd ./src
                 ./vendor/bin/psalm.phar
 
-            - name: PHPUnit
+            - name: Migrations
               run: |
                 cd ./src
                 bin/cake migrations migrate -c test
+
+            - name: PHPUnit
+              run: |
+                cd ./src
                 ./vendor/bin/phpunit -v
