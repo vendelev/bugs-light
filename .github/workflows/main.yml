@@ -18,8 +18,8 @@ jobs:
             mysql:
                 image: mysql:5.7
                 env:
-                    MYSQL_ALLOW_EMPTY_PASSWORD: false
-                    MYSQL_ROOT_PASSWORD: 12345
+                    MYSQL_ALLOW_EMPTY_PASSWORD: true
+#                    MYSQL_ROOT_PASSWORD: 12345
                     MYSQL_DATABASE: test_myapp
                 ports:
                     - 3306/tcp
@@ -39,7 +39,7 @@ jobs:
 
             - name: Setup config
               run: |
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '12345', 'port' => ${{ job.services.mysql.ports['3306'] }}, 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
+                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '', 'port' => ${{ job.services.mysql.ports['3306'] }}, 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: cd ./src && composer install
