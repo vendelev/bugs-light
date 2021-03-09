@@ -26,11 +26,8 @@ jobs:
                   php-version: '7.4'
                   extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
 
-            - name: Change directory
-              run: cd ./src
-
             - name: Install dependencies
-              run: composer install
+              run: cd ./src && composer install
 
 #            - name: Install dependencies
 #                  uses: php-actions/composer@v5
