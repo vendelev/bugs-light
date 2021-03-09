@@ -48,7 +48,7 @@ jobs:
                   # What version of PHP to use
                   php_version: 7.4
                   # Space separated list of extensions to configure with the PHP build
-                  php_extensions: # optional
+                  php_extensions: bcmath iconv ctype gd mbstring mysqli pdo pdo_mysql sockets zip soap intl
                   # Configuration file location
                   configuration: ./src/phpunit.xml.dist
                   # JUnit output file location
