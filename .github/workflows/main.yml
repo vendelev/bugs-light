@@ -20,22 +20,20 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-            - name: Run composer
-              uses: nick-zh/composer-php@master
-              env:
-                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
-              with:
-                  action: 'install -oa'
+#            - name: Run composer
+#              uses: nick-zh/composer-php@master
+#              env:
+#                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
+#              with:
+#                  action: 'install -oa'
 
             - name: php-codesniffer
                 # You may pin to the exact commit or the version.
                 # uses: pipeline-components/php-codesniffer@e3341450afba37fab4275b31f041646a26b2da9d
               uses: pipeline-components/php-codesniffer@v0.12.3
-              env:
-                  GITHUB_WORKSPACE: /home/runner/work/bugs-light/bugs-light/src
               with:
                   # Directory to check
-                  directory: # optional, default is .
+                  directory: ./src
                   # Additional options
                   options: # optional, default is -s -p --colors --extensions=php
 
