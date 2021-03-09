@@ -40,7 +40,7 @@ jobs:
               run: sudo /etc/init.d/mysql start
 
             - name: Setup config
-              run: echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '12345',]]];" > ./src/config/app_local.php
+              run: echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => '12345', 'port' => '${{ job.services.mysql.ports['3306'] }}']]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: cd ./src && composer install
