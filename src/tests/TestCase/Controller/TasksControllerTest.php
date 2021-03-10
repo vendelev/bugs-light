@@ -68,6 +68,16 @@ class TasksControllerTest extends TestCase
         $this->enableCsrfToken();
         $this->post('/tasks/add', [
             'title' => 'Test-task2',
+            'description' => '',
+            'owner_id' => 1,
+            'type_id' => 1,
+            'status_id' => 1,
+        ]);
+        $this->assertResponseOk();
+        $this->assertResponseContains('The task could not be saved');
+
+        $this->post('/tasks/add', [
+            'title' => 'Test-task2',
             'description' => 'test',
             'owner_id' => 1,
             'type_id' => 1,
@@ -87,6 +97,16 @@ class TasksControllerTest extends TestCase
     {
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
+        $this->post('/tasks/edit/1', [
+            'title' => '',
+            'description' => 'test',
+            'owner_id' => 1,
+            'type_id' => 1,
+            'status_id' => 1,
+        ]);
+        $this->assertResponseOk();
+        $this->assertResponseContains('The task could not be saved');
+
         $this->post('/tasks/edit/1', [
             'title' => 'Test-task2',
             'description' => 'test',
