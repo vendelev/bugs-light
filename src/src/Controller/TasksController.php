@@ -5,7 +5,6 @@ use App\Model\Table\TasksTable;
 use App\Model\Table\UsersTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Response;
-use Cake\ORM\Query;
 
 /**
  * @property TasksTable $Tasks
@@ -17,18 +16,10 @@ class TasksController extends AppController
     {
         $this->paginate = [
             'contain' => [
-                'Owners' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'Workers' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'TaskTypes' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'TaskStatuses' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                }
+                'Owners' => $this->getWithDeletedClosure(),
+                'Workers' => $this->getWithDeletedClosure(),
+                'TaskTypes' => $this->getWithDeletedClosure(),
+                'TaskStatuses' => $this->getWithDeletedClosure()
             ],
         ];
 
@@ -56,22 +47,12 @@ class TasksController extends AppController
     {
         $task = $this->Tasks->get($id, [
             'contain' => [
-                'Owners' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'Workers' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'TaskTypes' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
-                'TaskStatuses' => function (Query $query) {
-                    return $query->applyOptions(['withDeleted']);
-                },
+                'Owners' => $this->getWithDeletedClosure(),
+                'Workers' => $this->getWithDeletedClosure(),
+                'TaskTypes' => $this->getWithDeletedClosure(),
+                'TaskStatuses' => $this->getWithDeletedClosure(),
                 'TaskComments' => [
-                    'Users' => function (Query $query) {
-                        return $query->applyOptions(['withDeleted']);
-                    },
+                    'Users' => $this->getWithDeletedClosure(),
                 ]
             ],
         ]);
@@ -117,9 +98,7 @@ class TasksController extends AppController
     {
         $this->loadModel('Users');
 
-        $task = $this->Tasks->get($id, [
-            'contain' => [],
-        ]);
+        $task = $this->Tasks->get($id);
 
         $userId = $this->Auth->user('id');
         if ($task->owner_id !== $userId && $task->worker_id !== $userId) {
@@ -137,21 +116,9 @@ class TasksController extends AppController
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
 
-        /** @var Query $users */
-        $users = $this->loadModel('Users')->find('list', ['limit' => 200]);
-        $users->union(
-            $this->Users
-                ->find('all', ['conditions' => ['id' => $task->owner_id], 'withDeleted'])
-                ->select(['id', 'name'])
-        );
-
-        if ($task->worker_id) {
-            $users->union(
-                $this->Users
-                    ->find('all', ['conditions' => ['id' => $task->worker_id], 'withDeleted'])
-                    ->select(['id', 'name'])
-            );
-        }
+        /** @var UsersTable $repo */
+        $repo = $this->loadModel('Users');
+        $users = $repo->findForEditTaskForm($task->owner_id, $task->worker_id);
 
         $taskTypes = $this->Tasks->TaskTypes->find('list', ['limit' => 200]);
         $taskStatuses = $this->Tasks->TaskStatuses->find('list', ['limit' => 200]);
