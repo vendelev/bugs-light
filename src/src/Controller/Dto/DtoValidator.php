@@ -10,10 +10,10 @@ class DtoValidator
     public Validator $validator;
     public ValidationInterface $dtoClass;
 
-    public function __construct(string $dtoClassName)
+    public function __construct(ValidationInterface $dto)
     {
         $this->validator = new Validator();
-        $this->dtoClass = new $dtoClassName;
+        $this->dtoClass = $dto;
 
         if (!$this->dtoClass instanceof ValidationInterface) {
             throw new RuntimeException('Проверяемый объект должен реализовывать ValidationInterface');

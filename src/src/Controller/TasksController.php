@@ -27,7 +27,7 @@ class TasksController extends AppController
     ) {
         parent::__construct($request, $response, $name, $eventManager, $components);
 
-        $this->validator = new DtoValidator(TaskRequest::class);
+        $this->validator = new DtoValidator(new TaskRequest);
     }
 
     public function index(): void
