@@ -71,7 +71,7 @@ class TasksController extends AppController
         $task = $this->Tasks->newEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
-            if ($this->Tasks->save($task)) {
+            if (!$task->getErrors() && $this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -108,7 +108,7 @@ class TasksController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
-            if ($this->Tasks->save($task)) {
+            if (!$task->getErrors() && $this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

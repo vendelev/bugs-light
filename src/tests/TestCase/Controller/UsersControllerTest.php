@@ -84,6 +84,14 @@ class UsersControllerTest extends TestCase
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
         $this->post('/users/edit/1', [
+            'email' => 'test',
+            'pass' => '12345',
+            'name' => 'test'
+        ]);
+        $this->assertResponseOk();
+        $this->assertResponseContains('The user could not be saved');
+
+        $this->post('/users/edit/1', [
             'email' => 'test@test.ru',
             'pass' => '12345',
             'name' => 'test'
