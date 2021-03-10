@@ -41,7 +41,8 @@ jobs:
 
             - name: Setup config
               run: |
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'host' => '127.0.0.1', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
+                  echo "<?php
+                  return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'host' => '127.0.0.1', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8'], 'default' => ['username' => 'root', 'password' => 'root', 'host' => '127.0.0.1', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8']]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: |
