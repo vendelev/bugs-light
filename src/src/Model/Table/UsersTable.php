@@ -108,14 +108,16 @@ class UsersTable extends Table
         $users = $this->find('list', ['limit' => 200]);
         $users->union(
             $this
-                ->find('all', ['conditions' => ['id' => $ownerId], 'withDeleted'])
+                ->find('all', ['withDeleted'])
                 ->select(['id', 'name'])
+                ->where(['id' => $ownerId])
         );
 
         if ($workerId) {
             $users->union(
                 $this
-                    ->find('all', ['conditions' => ['id' => $workerId], 'withDeleted'])
+                    ->find('all', ['withDeleted'])
+                    ->where(['id' => $workerId])
                     ->select(['id', 'name'])
             );
         }
