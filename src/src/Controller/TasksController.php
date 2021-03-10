@@ -1,10 +1,14 @@
 <?php
 namespace App\Controller;
 
+use App\Controller\Dto\DtoValidator;
+use App\Controller\Dto\TaskRequest;
+use App\Model\Entity\Task;
 use App\Model\Table\TasksTable;
 use App\Model\Table\UsersTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 
 /**
  * @property TasksTable $Tasks
@@ -12,6 +16,19 @@ use Cake\Http\Response;
  */
 class TasksController extends AppController
 {
+    protected DtoValidator $validator;
+
+    public function __construct(
+        ServerRequest $request = null,
+        Response $response = null,
+        $name = null,
+        $eventManager = null,
+        $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+
+        $this->validator = new DtoValidator(TaskRequest::class);
+    }
+
     public function index(): void
     {
         $this->paginate = [
@@ -70,8 +87,7 @@ class TasksController extends AppController
     {
         $task = $this->Tasks->newEntity();
         if ($this->request->is('post')) {
-            $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
-            if (!$task->getErrors() && $this->Tasks->save($task)) {
+            if ($this->patchEntity($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -100,15 +116,13 @@ class TasksController extends AppController
 
         $task = $this->Tasks->get($id);
 
-        $userId = $this->Auth->user('id');
-        if ($task->owner_id !== $userId && $task->worker_id !== $userId) {
+        if (!$this->checkAuthUser($task->owner_id) && !$this->checkAuthUser($task->worker_id)) {
             $this->Flash->error(__('Вы можете только просматривать'));
             return $this->redirect(['action' => 'view', $task->id]);
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $task = $this->Tasks->patchEntity($task, $this->getRequestAllData());
-            if (!$task->getErrors() && $this->Tasks->save($task)) {
+            if ($this->patchEntity($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -127,6 +141,26 @@ class TasksController extends AppController
         return null;
     }
 
+    protected function patchEntity(Task $task): bool
+    {
+        $validator = $this->getValidator();
+        $errors = $validator->validate($this->getRequestAllData());
+
+        if (!$errors) {
+            $task = $this->Tasks->patchEntity($task, $validator->getFilledData());
+            if (!$task->getErrors() && $this->Tasks->save($task)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function getValidator(): DtoValidator
+    {
+        return $this->validator;
+    }
+
     /**
      * Delete method
      *
@@ -139,7 +173,7 @@ class TasksController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $task = $this->Tasks->get($id);
 
-        if ($task->owner_id !== $this->Auth->user('id')) {
+        if (!$this->checkAuthUser($task->owner_id)) {
             $this->Flash->error(__('Вы можете только просматривать'));
             return $this->redirect(['action' => 'index']);
         }
@@ -151,5 +185,10 @@ class TasksController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function checkAuthUser(?int $userId): bool
+    {
+        return $userId === $this->Auth->user('id');
     }
 }
