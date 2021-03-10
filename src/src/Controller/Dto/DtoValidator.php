@@ -14,11 +14,6 @@ class DtoValidator
     {
         $this->validator = new Validator();
         $this->dtoClass = $dto;
-
-        if (!$this->dtoClass instanceof ValidationInterface) {
-            throw new RuntimeException('Проверяемый объект должен реализовывать ValidationInterface');
-        }
-
         $this->dtoClass->addValidation($this->validator);
     }
 
