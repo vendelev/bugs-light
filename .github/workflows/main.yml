@@ -3,7 +3,7 @@
 name: CI
 
 # Controls when the action will run.
-on: [push, pull_request]
+on: [pull_request]
 #
 #    # Allows you to run this workflow manually from the Actions tab
 #    workflow_dispatch:
@@ -33,15 +33,15 @@ jobs:
                   php-version: '7.4'
                   extensions: bcmath, iconv, ctype, gd, mbstring, mysqli, pdo, pdo_mysql, sockets, zip, soap, intl
 
-            - name: Start mysql service
-              run: |
-                sudo /etc/init.d/mysql start
-                mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
-                mysql -V
+#            - name: Start mysql service
+#              run: |
+#                sudo /etc/init.d/mysql start
+#                mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS test_myapp'
+#                mysql -V
 
             - name: Setup config
               run: |
-                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
+                echo "<?php return ['Datasources' => ['test' => ['username' => 'root', 'password' => 'root', 'host' => '127.0.0.1', 'port' => '${{ job.services.mysql.ports['3306'] }}', 'database' => 'test_myapp', 'persistent' => false, 'encoding' => 'utf8',]]];" > ./src/config/app_local.php
 
             - name: Install dependencies
               run: |
