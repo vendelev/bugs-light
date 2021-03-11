@@ -23,10 +23,11 @@ class TasksController extends AppController
         Response $response = null,
         $name = null,
         $eventManager = null,
-        $components = null) {
+        $components = null
+    ) {
         parent::__construct($request, $response, $name, $eventManager, $components);
 
-        $this->validator = new DtoValidator(TaskRequest::class);
+        $this->validator = new DtoValidator(new TaskRequest);
     }
 
     public function index(): void
