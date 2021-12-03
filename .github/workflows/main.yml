@@ -57,8 +57,8 @@ jobs:
 #              env:
 #                DATABASE_URL: "mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/cakephp?init[]=SET sql_mode = \"STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION\""
 
-    static-analysis:
-        name: Coding Standard
+    coding-analysis:
+        name: Coding Standard & Analysis
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -79,26 +79,4 @@ jobs:
               run: |
                 cd ./src
                 ./vendor/bin/psalm.phar
-
-    coding-standard:
-        name: Coding Standard
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '7.4'
-                  extensions: mbstring, intl
-
-            - name: Install dependencies
-              run: |
-                cd ./src
-                composer install --no-progress --prefer-dist --optimize-autoloader
-
-            - name: PHP CodeSniffer
-              run: |
-                cd ./src
                 composer cs-check
